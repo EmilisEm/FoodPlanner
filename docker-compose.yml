@@ -1,0 +1,39 @@
+version: '3.4'
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  dietapp.server:
+    image: docker.io/library/dietapp
+    depends_on:
+        - "db"
+    container_name: dietapp-api
+    ports:
+        - "8080:80"
+    build:
+      context: .
+      dockerfile: DietApp.Server/Dockerfile
+    environment:
+        - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=dietDb;Pooling=true;
+        - ASPNETCORE_URLS=http://+:80
+    networks:
+        - dev
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=dietDb
+    ports:
+        - "5433:5432"
+    restart: always
+    volumes:
+        - app_data:/var/lib/postgresql/data
+    networks:
+        - dev
+
+volumes:
+    app_data:
