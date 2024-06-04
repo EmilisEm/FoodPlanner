@@ -4,7 +4,7 @@ namespace DietApp.Server.Repositories.IngredientRepository
 {
 	public interface IIngredientRepository
 	{
-		public Task<Ingredient> GetIngredientByIdAsync(Guid id);
+		public Task<Ingredient?> GetIngredientByIdAsync(Guid id);
 		public Task<List<Ingredient>> GetIngredientsAsync(Guid id);
 		public Task<Ingredient> CrateIngredientAsync(Ingredient ingredient);
 		public Task<int> UpdateIngredientAsync(Guid id, Ingredient ingredient);

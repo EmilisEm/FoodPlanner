@@ -1,32 +1,60 @@
-﻿using DietApp.Server.models;
+﻿using DietApp.Server.Data;
+using DietApp.Server.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietApp.Server.Repositories.UnitRepository
 {
 	public class UnitRepository : IUnitRepository
 	{
-		public Task<Unit> CrateUnitAsync(Unit unit)
+		private readonly DietAppDbContex _context;
+
+		public UnitRepository(DietAppDbContex context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public Task<int> DeleteUnitAsync(Guid id)
+		public async Task<Unit> CrateUnitAsync(Unit unit)
 		{
-			throw new NotImplementedException();
+			await _context.AddAsync(unit);
+			await _context.SaveChangesAsync();
+
+			return unit;
 		}
 
-		public Task<Unit> GetUnitByIdAsync(Guid id)
+		public async Task<int> DeleteUnitAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			Unit? unit = await _context.Unit.FirstOrDefaultAsync(unit => unit.Id == id);
+			if (unit == null)
+			{
+				throw new Exception("Unit not found");
+			}
+
+			_context.Unit.Remove(unit);
+			return await _context.SaveChangesAsync();
 		}
 
-		public Task<List<Unit>> GetUnitsAsync(Guid id)
+		public async Task<Unit?> GetUnitByIdAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return await _context.Unit.FirstOrDefaultAsync(unit => unit.Id == id);
 		}
 
-		public Task<int> UpdateUnitAsync(Guid id, Unit unit)
+		public async Task<List<Unit>> GetUnitsAsync()
 		{
-			throw new NotImplementedException();
+			return await _context.Unit.ToListAsync();
+		}
+
+		public async Task<int> UpdateUnitAsync(Guid id, Unit unit)
+		{
+			Unit? original = await _context.Unit.FirstOrDefaultAsync(unit => unit.Id == id);
+
+			if (original == null)
+			{
+				throw new Exception("Unit not found");
+			}
+			
+			unit.Id = id;
+			_context.Entry(original).CurrentValues.SetValues(unit);
+			return await _context.SaveChangesAsync();
 		}
 	}
 }

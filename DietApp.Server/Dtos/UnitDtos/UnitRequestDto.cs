@@ -2,5 +2,6 @@
 {
 	public class UnitRequestDto
 	{
+		public string Name { get; set; } = null!;
 	}
 }

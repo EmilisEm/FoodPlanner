@@ -15,7 +15,7 @@ namespace DietApp.Server.Controllers
 			_unitService = unitService;
 		}
 		
-		[HttpGet("/{id}")]
+		[HttpGet("{id}")]
 		public async Task<IActionResult> GetUnit(Guid id)
 		{
 			UnitResponseDto unit = await _unitService.GetUnitAsync(id); 
@@ -29,7 +29,7 @@ namespace DietApp.Server.Controllers
 			return Ok(units);
 		}
 
-		[HttpPut("/{id}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateUnit(Guid id, UnitRequestDto newUnit)
 		{
 			await _unitService.UpdateUnitAsync(id, newUnit);
@@ -43,7 +43,7 @@ namespace DietApp.Server.Controllers
 			return CreatedAtAction(nameof(CreateUnit), unit);
 		}
 
-		[HttpDelete("/{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteUnit(Guid id)
 		{
 			await _unitService.DeleteUnitAsync(id); 
