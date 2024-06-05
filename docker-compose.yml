@@ -30,10 +30,5 @@ services:
     ports:
         - "5433:5432"
     restart: always
-    volumes:
-        - app_data:/var/lib/postgresql/data
     networks:
         - dev
-
-volumes:
-    app_data:

@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappers\" />
     <EditorConfigFiles Remove="C:\Users\emili\OneDrive\Desktop\DietApp\DietApp.Server\.editorconfig" />
   </ItemGroup>
 

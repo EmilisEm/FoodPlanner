@@ -15,7 +15,7 @@ namespace DietApp.Server.Controllers
 			_ingredientService = ingredientService;
 		}
 
-		[HttpGet("/{id}")]
+		[HttpGet("{id}")]
 		public async Task<IActionResult> GetIngredient(Guid id)
 		{
 			IngredientResponseDto ingredient = await _ingredientService.GetIngredientAsync(id);
@@ -31,7 +31,7 @@ namespace DietApp.Server.Controllers
 			return Ok(ingredients);
 		}
 
-		[HttpDelete("/{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteIngredient(Guid id)
 		{
 			 await _ingredientService.DeleteIngredientAsync(id);
@@ -47,7 +47,7 @@ namespace DietApp.Server.Controllers
 			return CreatedAtAction(nameof(CreateIngredient), ingredient);
 		}
 
-		[HttpPut("/{id}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateIngredient(Guid id, IngredientRequestDto updatedIngredient)
 		{
 			 await _ingredientService.UpdateIngredientAsync(id, updatedIngredient);

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DietApp.Server.Models;
 
 namespace DietApp.Server.models
 {
@@ -7,6 +6,6 @@ namespace DietApp.Server.models
 	{
 		[Key] public Guid Id { get; set; }
 		[Required] public required string Name { get; set; }
-		public List<IngredientUnit>? Units {  get; set; } 
+		[Required] public required IEnumerable<Unit> Units { get; set; } = new List<Unit>();
 	}
 }

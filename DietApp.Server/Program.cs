@@ -1,6 +1,5 @@
 using DietApp.Server.Data;
 using DietApp.Server.Repositories.IngredientRepository;
-using DietApp.Server.Repositories.IngredientUnitRepository;
 using DietApp.Server.Repositories.MealCommentRepository;
 using DietApp.Server.Repositories.MealItemRepository;
 using DietApp.Server.Repositories.MealRepository;
@@ -19,7 +18,6 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<DietAppDbContex>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
-builder.Services.AddScoped<IIngredientUnitRepository, IngredientUnitRepository>();
 builder.Services.AddScoped<IMealCommentRepository, MealCommentRepository>();
 builder.Services.AddScoped<IMealItemRepository, MealItemRepository>();
 builder.Services.AddScoped<IMealRepository, MealRepository>();

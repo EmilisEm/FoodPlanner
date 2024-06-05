@@ -30,14 +30,14 @@ namespace DietApp.Server.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> UpdateUnit(Guid id, UnitRequestDto newUnit)
+		public async Task<IActionResult> UpdateUnit(Guid id, UnitChangeRequestDto newUnit)
 		{
 			await _unitService.UpdateUnitAsync(id, newUnit);
 			return NoContent();
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> CreateUnit(UnitRequestDto newUnit)
+		public async Task<IActionResult> CreateUnit(UnitChangeRequestDto newUnit)
 		{
 			UnitResponseDto unit = await _unitService.CreateUnitAsync(newUnit);
 			return CreatedAtAction(nameof(CreateUnit), unit);

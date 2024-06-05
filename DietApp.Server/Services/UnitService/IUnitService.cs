@@ -6,8 +6,8 @@ namespace DietApp.Server.Services.UnitService
 	{
 		public Task<UnitResponseDto> GetUnitAsync(Guid id);
 		public Task<List<UnitResponseDto>> GetUnitsAsync();
-		public Task<UnitResponseDto> CreateUnitAsync(UnitRequestDto unitRequestDto);
+		public Task<UnitResponseDto> CreateUnitAsync(UnitChangeRequestDto unitRequestDto);
 		public Task DeleteUnitAsync(Guid id);
-		public Task UpdateUnitAsync(Guid id, UnitRequestDto unitRequestDto);
+		public Task UpdateUnitAsync(Guid id, UnitChangeRequestDto unitRequestDto);
 	}
 }

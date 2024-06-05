@@ -1,5 +1,4 @@
 ﻿using DietApp.Server.models;
-using DietApp.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DietApp.Server.Data
@@ -12,7 +11,13 @@ namespace DietApp.Server.Data
 		public DbSet<MealComment> MealsComment { get; set; }
 		public DbSet<Ingredient> Ingredients { get; set; }
 		public DbSet<Unit> Unit { get; set; }
-		public DbSet<IngredientUnit> IngredientUnits { get; set; }
 		public DietAppDbContex(DbContextOptions<DietAppDbContex> options) : base(options) { }
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Ingredient>()
+				.HasMany(ingreident => ingreident.Units)
+				.WithMany(unit => unit.Ingredients);
+		}
 	}
 }

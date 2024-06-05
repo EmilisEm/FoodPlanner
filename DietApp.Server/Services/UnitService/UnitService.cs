@@ -14,7 +14,7 @@ namespace DietApp.Server.Services.UnitService
 			_unitRepository = unitRepository;
 		}
 
-		public async Task<UnitResponseDto> CreateUnitAsync(UnitRequestDto unitRequestDto)
+		public async Task<UnitResponseDto> CreateUnitAsync(UnitChangeRequestDto unitRequestDto)
 		{
 			Unit unit = UnitMapper.FromDto(unitRequestDto);
 			await _unitRepository.CrateUnitAsync(unit);
@@ -53,9 +53,9 @@ namespace DietApp.Server.Services.UnitService
 			return units.Select(UnitMapper.ToDto).ToList();
 		}
 
-		public async Task UpdateUnitAsync(Guid id, UnitRequestDto unitRequestDto)
+		public async Task UpdateUnitAsync(Guid id, UnitChangeRequestDto unitRequestDto)
 		{
-			Unit original = await _unitRepository.GetUnitByIdAsync(id);
+			Unit? original = await _unitRepository.GetUnitByIdAsync(id);
 
 			if (original == null)
 			{

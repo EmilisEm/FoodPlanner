@@ -14,11 +14,29 @@ namespace DietApp.Server.Mappers
 			};
 		}
 
-		public static Unit FromDto(UnitRequestDto unit)
+		public static Unit FromDto(UnitChangeRequestDto unit)
 		{
 			return new Unit()
 			{
 				Id = Guid.NewGuid(),
+				Name = unit.Name,
+			};
+		}
+
+		public static Unit FromDto(UnitRequestDto unit)
+		{
+			return new Unit()
+			{
+				Id = unit.Id,
+				Name = unit.Name,
+			};
+		}
+
+		public static Unit FromDto(UnitChangeRequestDto unit, Guid id)
+		{
+			return new Unit()
+			{
+				Id = id,
 				Name = unit.Name,
 			};
 		}

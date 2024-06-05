@@ -3,6 +3,7 @@ using System;
 using DietApp.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DietApp.Server.Migrations
 {
     [DbContext(typeof(DietAppDbContex))]
-    partial class DietAppDbContexModelSnapshot : ModelSnapshot
+    [Migration("20240605075058_Removed ingredientUnit")]
+    partial class RemovedingredientUnit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,28 +142,18 @@ namespace DietApp.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("IngredientId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IngredientId");
+
                     b.ToTable("Unit");
-                });
-
-            modelBuilder.Entity("IngredientUnit", b =>
-                {
-                    b.Property<Guid>("IngredientsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UnitsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("IngredientsId", "UnitsId");
-
-                    b.HasIndex("UnitsId");
-
-                    b.ToTable("IngredientUnit");
                 });
 
             modelBuilder.Entity("DietApp.Server.models.MealComment", b =>
@@ -201,19 +194,16 @@ namespace DietApp.Server.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("IngredientUnit", b =>
+            modelBuilder.Entity("DietApp.Server.models.Unit", b =>
                 {
                     b.HasOne("DietApp.Server.models.Ingredient", null)
-                        .WithMany()
-                        .HasForeignKey("IngredientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Units")
+                        .HasForeignKey("IngredientId");
+                });
 
-                    b.HasOne("DietApp.Server.models.Unit", null)
-                        .WithMany()
-                        .HasForeignKey("UnitsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("DietApp.Server.models.Ingredient", b =>
+                {
+                    b.Navigation("Units");
                 });
 #pragma warning restore 612, 618
         }
