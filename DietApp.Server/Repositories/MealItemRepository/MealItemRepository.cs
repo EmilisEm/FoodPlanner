@@ -1,32 +1,60 @@
-﻿using DietApp.Server.models;
+﻿using DietApp.Server.Data;
+using DietApp.Server.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietApp.Server.Repositories.MealItemRepository
 {
 	public class MealItemRepository : IMealItemRepository
 	{
-		public Task<MealItem> CrateMealItemAsync(MealItem mealItem)
+		private readonly DietAppDbContex _context;
+
+		public MealItemRepository(DietAppDbContex context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public Task<int> DeleteMealItemAsync(Guid id)
+		public async Task<MealItem> CrateMealItemAsync(MealItem mealItem)
 		{
-			throw new NotImplementedException();
+			await _context.AddAsync(mealItem);
+			await _context.SaveChangesAsync();
+
+			return mealItem;
 		}
 
-		public Task<MealItem> GetMealItemByIdAsync(Guid id)
+		public async Task<int> DeleteMealItemAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			MealItem? item = await _context.MealsItem.FirstOrDefaultAsync(item => item.Id == id);
+
+			if (item == null)
+			{
+				// TODO: Exceptions
+				throw new Exception("MealItem not found");
+			}
+
+			return await _context.SaveChangesAsync();
 		}
 
-		public Task<List<MealItem>> GetMealItemsByMealIdAsync(Guid id)
+		public async Task<MealItem?> GetMealItemByIdAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return await _context.MealsItem.FirstOrDefaultAsync(item => item.Id == id);
 		}
 
-		public Task<int> UpdateMealItemAsync(Guid id, MealItem mealItem)
+		public async Task<List<MealItem>> GetMealItemsByMealIdAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return await _context.MealsItem.Where(item => item.MealId == id).ToListAsync();
+		}
+
+		public async Task<int> UpdateMealItemAsync(Guid id, MealItem mealItem)
+		{
+			MealItem? item = await _context.MealsItem.FirstOrDefaultAsync(item => item.Id == id);
+
+			if (item == null)
+			{
+				// TODO: Exceptions
+				throw new Exception("Meal item not found");
+			}
+
+			return await _context.SaveChangesAsync();
 		}
 	}
 }
