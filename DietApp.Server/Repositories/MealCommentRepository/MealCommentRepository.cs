@@ -14,7 +14,7 @@ namespace DietApp.Server.Repositories.MealCommentRepository
 			throw new NotImplementedException();
 		}
 
-		public Task<MealComment> GetMealCommentByIdAsync(Guid id)
+		public Task<MealComment?> GetMealCommentByIdAsync(Guid id)
 		{
 			throw new NotImplementedException();
 		}

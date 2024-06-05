@@ -15,7 +15,7 @@ namespace DietApp.Server.Controllers
 			_mealService = mealService;
 		}
 
-		[HttpGet("/{id}")]
+		[HttpGet("{id}")]
 		public async Task<IActionResult> GetMeal(Guid id) 
 		{
 			MealResponseDto meal = await _mealService.GetMealAsync(id);
@@ -39,7 +39,7 @@ namespace DietApp.Server.Controllers
 			return CreatedAtAction(nameof(CreateMeal), meal);
 		}
 
-		[HttpPut("/{id}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateMeal(Guid id, MealRequestDto mealRequestDto) 
 		{
 			await _mealService.UpdateMealAsync(id, mealRequestDto);
@@ -47,7 +47,7 @@ namespace DietApp.Server.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("/{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteMeal(Guid id) 
 		{
 			await _mealService.DeleteMealAsync(id);

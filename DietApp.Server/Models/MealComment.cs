@@ -6,7 +6,7 @@ namespace DietApp.Server.models
 	{
 		[Key] public Guid Id { get; set; }
 		[Required] public required string Content { get; set; }
-		[Required] public required DateTime CreatedAd { get; set; }
+		[Required] public required DateTime CreatedAt { get; set; }
 		[Required] public Guid MealId { get; set; }
 		public Meal? Meal { get; set; }
 	}

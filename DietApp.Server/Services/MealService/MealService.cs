@@ -1,32 +1,57 @@
 ﻿using DietApp.Server.Dtos.MealDtos;
+using DietApp.Server.Mappers;
+using DietApp.Server.models;
+using DietApp.Server.Repositories.MealRepository;
 
 namespace DietApp.Server.Services.MealService
 {
 	public class MealService : IMealService
 	{
-		public Task<MealResponseDto> CreateMealAsync(MealRequestDto mealRequestDto)
+		private readonly IMealRepository _mealRepository;
+
+		public MealService(IMealRepository mealRepository)
 		{
-			throw new NotImplementedException();
+			_mealRepository = mealRepository;
 		}
 
-		public Task DeleteMealAsync(Guid id)
+		public async Task<MealResponseDto> CreateMealAsync(MealRequestDto mealRequestDto)
 		{
-			throw new NotImplementedException();
+			Meal meal = MealMapper.FromDto(mealRequestDto);
+			await _mealRepository.CrateMealAsync(meal);
+
+			return MealMapper.ToDto(meal);
 		}
 
-		public Task<MealResponseDto> GetMealAsync(Guid id)
+		public async Task DeleteMealAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			await _mealRepository.DeleteMealAsync(id);
 		}
 
-		public Task<List<MealResponseDto>> GetMealsAsync()
+		public async Task<MealResponseDto> GetMealAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			Meal? meal = await _mealRepository.GetMealByIdAsync(id);
+
+			if (meal == null)
+			{
+				// TODO: Exceptions
+				throw new Exception("Meal not found");
+			}
+
+			return MealMapper.ToDto(meal);
 		}
 
-		public Task UpdateMealAsync(Guid id, MealRequestDto mealRequestDto)
+		public async Task<List<MealResponseDto>> GetMealsAsync()
 		{
-			throw new NotImplementedException();
+			return (await _mealRepository.GetMealsAsync())
+				.Select(MealMapper.ToDto)
+				.ToList();
+		}
+
+		public async Task UpdateMealAsync(Guid id, MealRequestDto mealRequestDto)
+		{
+			Meal meal = MealMapper.FromDto(mealRequestDto, id);
+
+			await _mealRepository.UpdateMealAsync(id, meal);
 		}
 	}
 }
