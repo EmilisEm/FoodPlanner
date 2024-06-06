@@ -39,9 +39,9 @@ namespace DietApp.Server.Repositories.MealRepository
 			return await _context.Meals.FirstOrDefaultAsync(meal => meal.Id == id);
 		}
 
-		public Task<List<Meal>> GetMealsAsync()
+		public async Task<IEnumerable<Meal>> GetMealsAsync()
 		{
-			return _context.Meals.ToListAsync();
+			return await _context.Meals.ToListAsync();
 		}
 
 		public async Task<int> UpdateMealAsync(Guid id, Meal meal)

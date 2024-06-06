@@ -7,6 +7,6 @@ namespace DietApp.Server.Dtos.MealDtos
 	{
 		[Required] public required string Name { get; set; }
 		[Required] public required string Instructions { get; set; }
-		[Required] public required List<MealCommentRequestDto> Comments { get; set; }
+		[Required] public required IEnumerable<MealCommentRequestDto> Comments { get; set; }
 	}
 }

@@ -39,7 +39,7 @@ namespace DietApp.Server.Repositories.MealCommentRepository
 			return _context.MealsComment.FirstOrDefaultAsync(comment => comment.Id == id);
 		}
 
-		public async Task<List<MealComment>> GetMealCommentsByMealIdAsync(Guid id)
+		public async Task<IEnumerable<MealComment>> GetMealCommentsByMealIdAsync(Guid id)
 		{
 			return await _context.MealsComment.Where(comment => comment.MealId ==  id).ToListAsync();
 		}

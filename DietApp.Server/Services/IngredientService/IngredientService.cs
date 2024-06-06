@@ -51,7 +51,7 @@ namespace DietApp.Server.Services.IngredientService
 			return IngredientMapper.ToDto(ingredient);
 		}
 
-		public async Task<List<IngredientResponseDto>> GetIngredientsAsync()
+		public async Task<IEnumerable<IngredientResponseDto>> GetIngredientsAsync()
 		{
 			return (await _ingredientRepository.GetIngredientsAsync()).Select(IngredientMapper.ToDto).ToList();
 		}

@@ -40,7 +40,7 @@ namespace DietApp.Server.Services.MealService
 			return MealMapper.ToDto(meal);
 		}
 
-		public async Task<List<MealResponseDto>> GetMealsAsync()
+		public async Task<IEnumerable<MealResponseDto>> GetMealsAsync()
 		{
 			return (await _mealRepository.GetMealsAsync())
 				.Select(MealMapper.ToDto)

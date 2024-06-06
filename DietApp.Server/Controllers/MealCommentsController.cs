@@ -14,7 +14,7 @@ namespace DietApp.Server.Controllers
 			_mealCommentService = mealCommentService;
 		}
 
-		[HttpGet("/{id}")]
+		[HttpGet("{id}")]
 		public async Task<IActionResult> GetMealComment(Guid id)
 		{
 			MealCommentResponseDto comment = await _mealCommentService.GetMealCommentAsync(id);
@@ -22,15 +22,15 @@ namespace DietApp.Server.Controllers
 			return Ok(comment);
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> GetMealComments()
+		[HttpGet("by-meal/{mealId}")]
+		public async Task<IActionResult> GetMealCommentsByMealId(Guid mealId)
 		{
-			List<MealCommentResponseDto> comments = await _mealCommentService.GetMealCommentsAsync();
+			IEnumerable<MealCommentResponseDto> comments = await _mealCommentService.GetMealCommentsByMealIdAsync(mealId);
 
 			return Ok(comments);
 		}
 
-		[HttpDelete("/{id}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteMealComment(Guid id)
 		{
 			await _mealCommentService.DeleteMealCommentAsync(id);
@@ -46,7 +46,7 @@ namespace DietApp.Server.Controllers
 			return Ok(comment);
 		}
 
-		[HttpPut("/{id}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult> UpdateMealComment(Guid id, MealCommentRequestDto mealComment)
 		{
 			await _mealCommentService.UpdateMealCommentAsync(id, mealComment);

@@ -26,7 +26,7 @@ namespace DietApp.Server.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetIngredients()
 		{
-			List<IngredientResponseDto> ingredients = await _ingredientService.GetIngredientsAsync();
+			IEnumerable<IngredientResponseDto> ingredients = await _ingredientService.GetIngredientsAsync();
 
 			return Ok(ingredients);
 		}

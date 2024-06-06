@@ -25,7 +25,7 @@ namespace DietApp.Server.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetUnits()
 		{
-			List<UnitResponseDto> units = await _unitService.GetUnitsAsync(); 
+			IEnumerable<UnitResponseDto> units = await _unitService.GetUnitsAsync(); 
 			return Ok(units);
 		}
 

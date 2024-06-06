@@ -9,6 +9,6 @@ namespace DietApp.Server.Dtos.MealDtos
 		[Required] public required string Name { get; set; }
 		[Required] public required string Instructions { get; set; }
 		[Required] public required DateTime CreatedAt { get; set; }
-		[Required] public required List<MealCommentResponseDto> Comments { get; set; }
+		[Required] public required IEnumerable<MealCommentResponseDto> Comments { get; set; }
 	}
 }

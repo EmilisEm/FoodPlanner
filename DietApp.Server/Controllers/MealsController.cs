@@ -26,7 +26,7 @@ namespace DietApp.Server.Controllers
 		[HttpGet]
 		public async Task<IActionResult> GetMeals() 
 		{
-			List<MealResponseDto> meals = await _mealService.GetMealsAsync();
+			IEnumerable<MealResponseDto> meals = await _mealService.GetMealsAsync();
 
 			return Ok(meals);
 		}

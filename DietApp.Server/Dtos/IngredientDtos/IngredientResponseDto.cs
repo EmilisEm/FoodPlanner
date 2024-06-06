@@ -9,6 +9,6 @@ namespace DietApp.Server.Dtos.IngredientDtos
 		[Required]
 		public required string Name { get; set; }
 		[Required]
-		public required List<UnitResponseDto> Units { get; set; }
+		public required IEnumerable<UnitResponseDto> Units { get; set; }
 	}
 }

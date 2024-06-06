@@ -40,7 +40,7 @@ namespace DietApp.Server.Services.MealCommentService
 			return MealCommentMapper.ToDto(comment);
 		}
 
-		public async Task<List<MealCommentResponseDto>> GetMealCommentsByMealIdAsync(Guid id)
+		public async Task<IEnumerable<MealCommentResponseDto>> GetMealCommentsByMealIdAsync(Guid id)
 		{
 			IEnumerable<MealComment> meals = await _mealCommentRepository.GetMealCommentsByMealIdAsync(id);
 

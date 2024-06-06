@@ -46,9 +46,9 @@ namespace DietApp.Server.Services.UnitService
 			return UnitMapper.ToDto(unit);
 		}
 
-		public async Task<List<UnitResponseDto>> GetUnitsAsync()
+		public async Task<IEnumerable<UnitResponseDto>> GetUnitsAsync()
 		{
-			List<Unit> units = await _unitRepository.GetUnitsAsync();
+			IEnumerable<Unit> units = await _unitRepository.GetUnitsAsync();
 
 			return units.Select(UnitMapper.ToDto).ToList();
 		}

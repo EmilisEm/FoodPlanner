@@ -8,6 +8,6 @@ namespace DietApp.Server.models
 		[Required] public required string Name { get; set; }
 		[Required] public required string Instructions { get; set; }
 		[Required] public required DateTime CreatedAt { get; set; }
-		[Required] public required List<MealComment> Comments { get; set; } = new List<MealComment>();
+		[Required] public required IEnumerable<MealComment> Comments { get; set; } = new List<MealComment>();
 	}
 }

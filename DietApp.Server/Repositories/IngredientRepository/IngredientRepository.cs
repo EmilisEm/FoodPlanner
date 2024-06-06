@@ -40,7 +40,7 @@ namespace DietApp.Server.Repositories.IngredientRepository
 			return await _context.Ingredients.Include(ingredient => ingredient.Units).FirstOrDefaultAsync(ingredient => ingredient.Id == id);
 		}
 
-		public async Task<List<Ingredient>> GetIngredientsAsync()
+		public async Task<IEnumerable<Ingredient>> GetIngredientsAsync()
 		{
 			return await _context.Ingredients.Include(ingredient => ingredient.Units).ToListAsync();
 		}

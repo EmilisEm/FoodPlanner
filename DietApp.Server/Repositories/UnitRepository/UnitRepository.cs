@@ -38,7 +38,7 @@ namespace DietApp.Server.Repositories.UnitRepository
 			return await _context.Unit.FirstOrDefaultAsync(unit => unit.Id == id);
 		}
 
-		public async Task<List<Unit>> GetUnitsAsync()
+		public async Task<IEnumerable<Unit>> GetUnitsAsync()
 		{
 			return await _context.Unit.ToListAsync();
 		}
