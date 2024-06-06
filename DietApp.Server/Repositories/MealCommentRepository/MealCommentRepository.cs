@@ -1,32 +1,61 @@
-﻿using DietApp.Server.models;
+﻿using DietApp.Server.Data;
+using DietApp.Server.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietApp.Server.Repositories.MealCommentRepository
 {
 	public class MealCommentRepository : IMealCommentRepository
 	{
-		public Task<MealComment> CrateMealCommentAsync(MealComment mealItem)
+		private readonly DietAppDbContex _context;
+
+		public MealCommentRepository(DietAppDbContex context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public Task<int> DeleteMealCommentAsync(Guid id)
+		public async Task<MealComment> CrateMealCommentAsync(MealComment mealComment)
 		{
-			throw new NotImplementedException();
+			_context.Add(mealComment);
+			await _context.SaveChangesAsync();
+			
+			return mealComment;
+		}
+
+		public async Task<int> DeleteMealCommentAsync(Guid id)
+		{
+			MealComment? comment = await _context.MealsComment.FirstOrDefaultAsync(comment => comment.Id == id);
+			
+			if (comment == null)
+			{
+				// TODO: Exceptions
+				throw new Exception("Failed to find meal comment");
+			}
+			_context.Remove(comment);
+			return await _context.SaveChangesAsync();
 		}
 
 		public Task<MealComment?> GetMealCommentByIdAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return _context.MealsComment.FirstOrDefaultAsync(comment => comment.Id == id);
 		}
 
-		public Task<List<MealComment>> GetMealCommentsByMealIdAsync(Guid id)
+		public async Task<List<MealComment>> GetMealCommentsByMealIdAsync(Guid id)
 		{
-			throw new NotImplementedException();
+			return await _context.MealsComment.Where(comment => comment.MealId ==  id).ToListAsync();
 		}
 
-		public Task<int> UpdateMealCommentAsync(Guid id, MealComment mealItem)
+		public async Task<int> UpdateMealCommentAsync(Guid id, MealComment mealItem)
 		{
-			throw new NotImplementedException();
+			MealComment? original = await _context.MealsComment.FirstOrDefaultAsync(comment => comment.Id == id);
+
+			if (original == null)
+			{
+				// TODO: Exceptions
+				throw new Exception("Meal comment not found");
+			}
+			
+			_context.Entry(original).CurrentValues.SetValues(mealItem);
+			return await _context.SaveChangesAsync();
 		}
 	}
 }

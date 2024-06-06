@@ -26,5 +26,16 @@ namespace DietApp.Server.Mappers
 				CreatedAt = comment.CreatedAt,
 			};
 		}
+
+		public static MealComment FromDto(Guid id, MealCommentRequestDto comment)
+		{
+			return new MealComment()
+			{
+				Id = id,
+				Content = comment.Content,
+				MealId = comment.MealId,
+				CreatedAt = comment.CreatedAt,
+			};
+		}
 	}
 }
