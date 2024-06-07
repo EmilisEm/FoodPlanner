@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Data;
+using DietApp.Server.Exceptions;
 using DietApp.Server.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace DietApp.Server.Repositories.IngredientRepository
 	public class IngredientRepository : IIngredientRepository
 	{
 		private readonly DietAppDbContex _context;
+		private readonly string INGREDIENT_NOT_FOUND = "Ingredient not found";
 
 		public IngredientRepository (DietAppDbContex context)
 		{
@@ -27,8 +29,7 @@ namespace DietApp.Server.Repositories.IngredientRepository
 
 			if (ingredient == null)
 			{
-				// TODO: Exception
-				throw new Exception("Ingredient not found");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 
 			_context.Remove(ingredient);
@@ -51,8 +52,7 @@ namespace DietApp.Server.Repositories.IngredientRepository
 
 			if (original == null)
 			{
-				// TODO: Exception
-				throw new Exception("Not found ingredient");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 
 			_context.Entry(original).CurrentValues.SetValues(ingredient);

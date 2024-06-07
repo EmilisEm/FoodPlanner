@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Dtos.UnitDtos;
+using DietApp.Server.Exceptions;
 using DietApp.Server.Mappers;
 using DietApp.Server.models;
 using DietApp.Server.Repositories.UnitRepository;
@@ -8,6 +9,7 @@ namespace DietApp.Server.Services.UnitService
 	public class UnitService : IUnitService
 	{
 		private readonly IUnitRepository _unitRepository;
+		private readonly string UNIT_NOT_FOUND = "Unit not found";
 
 		public UnitService (IUnitRepository unitRepository)
 		{
@@ -28,8 +30,7 @@ namespace DietApp.Server.Services.UnitService
 
 			if (deletedCount < 1) 
 			{
-				// TODO: make custom exception
-				throw new Exception("Unit not found");
+				throw new EntityNotFoundException(UNIT_NOT_FOUND);
 			}
 		}
 
@@ -39,8 +40,7 @@ namespace DietApp.Server.Services.UnitService
 
 			if (unit == null)
 			{
-				// TODO: Not found exception
-				throw new Exception("Unit not found");
+				throw new EntityNotFoundException(UNIT_NOT_FOUND);
 			}
 
 			return UnitMapper.ToDto(unit);
@@ -59,14 +59,14 @@ namespace DietApp.Server.Services.UnitService
 
 			if (original == null)
 			{
-				throw new Exception("Unit not found");
+				throw new EntityNotFoundException(UNIT_NOT_FOUND);
 			}
 
 			int count = await _unitRepository.UpdateUnitAsync(id, UnitMapper.FromDto(unitRequestDto, id));
 
 			if (count < 1)
 			{
-				throw new Exception("Failed to update unit");
+				throw new EntityNotFoundException(UNIT_NOT_FOUND);
 			}
 		}
 	}

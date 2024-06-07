@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Dtos.MealCommentDtos;
+using DietApp.Server.Exceptions;
 using DietApp.Server.Mappers;
 using DietApp.Server.models;
 using DietApp.Server.Repositories.MealCommentRepository;
@@ -8,6 +9,7 @@ namespace DietApp.Server.Services.MealCommentService
 	public class MealCommentService : IMealCommentService
 	{
 		private readonly IMealCommentRepository _mealCommentRepository;
+		private readonly string MEAL_COMMENT_NOT_FOUND = "Meal comment not found";
 
 		public MealCommentService(IMealCommentRepository mealCommentRepository)
 		{
@@ -33,8 +35,7 @@ namespace DietApp.Server.Services.MealCommentService
 
 			if (comment == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Meal comment not found");
+				throw new EntityNotFoundException(MEAL_COMMENT_NOT_FOUND);
 			}
 
 			return MealCommentMapper.ToDto(comment);

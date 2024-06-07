@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Dtos.IngredientDtos;
+using DietApp.Server.Exceptions;
 using DietApp.Server.Mappers;
 using DietApp.Server.models;
 using DietApp.Server.Repositories.IngredientRepository;
@@ -8,6 +9,7 @@ namespace DietApp.Server.Services.IngredientService
 	public class IngredientService : IIngredientService
 	{
 		private readonly IIngredientRepository _ingredientRepository;
+		private readonly string INGREDIENT_NOT_FOUND = "Ingredient not found";
 
 		public IngredientService(IIngredientRepository ingredientRepository)
 		{
@@ -27,14 +29,13 @@ namespace DietApp.Server.Services.IngredientService
 			Ingredient? ingredient = await _ingredientRepository.GetIngredientByIdAsync(id);
 			if (ingredient == null)
 			{
-				// TODO: Add not found exception
-				throw new Exception("Failed to find Ingredient");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 
 			int count = await _ingredientRepository.DeleteIngredientAsync(id);
 			if (count < 1)
 			{
-				throw new Exception("Failed to delete Ingredient");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 		}
 
@@ -44,8 +45,7 @@ namespace DietApp.Server.Services.IngredientService
 
 			if (ingredient == null)
 			{
-				// TODO: make this generic
-				throw new Exception("Failed to find Ingredient");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 
 			return IngredientMapper.ToDto(ingredient);
@@ -63,8 +63,7 @@ namespace DietApp.Server.Services.IngredientService
 
 			if (count < 1)
 			{
-				// TODO: You know
-				throw new Exception("Failed to update Ingredient");
+				throw new EntityNotFoundException(INGREDIENT_NOT_FOUND);
 			}
 		}
 	}

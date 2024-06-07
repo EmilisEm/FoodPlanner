@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Data;
+using DietApp.Server.Exceptions;
 using DietApp.Server.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace DietApp.Server.Repositories.MealCommentRepository
 	public class MealCommentRepository : IMealCommentRepository
 	{
 		private readonly DietAppDbContex _context;
+		private readonly string MEAL_COMMENT_NOT_FOUND = "Meal comment not found";
 
 		public MealCommentRepository(DietAppDbContex context)
 		{
@@ -27,8 +29,7 @@ namespace DietApp.Server.Repositories.MealCommentRepository
 			
 			if (comment == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Failed to find meal comment");
+				throw new EntityNotFoundException(MEAL_COMMENT_NOT_FOUND);
 			}
 			_context.Remove(comment);
 			return await _context.SaveChangesAsync();
@@ -50,8 +51,7 @@ namespace DietApp.Server.Repositories.MealCommentRepository
 
 			if (original == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Meal comment not found");
+				throw new EntityNotFoundException(MEAL_COMMENT_NOT_FOUND);
 			}
 			
 			_context.Entry(original).CurrentValues.SetValues(mealItem);

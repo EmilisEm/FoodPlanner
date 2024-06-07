@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Data;
+using DietApp.Server.Exceptions;
 using DietApp.Server.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace DietApp.Server.Repositories.MealItemRepository
 	public class MealItemRepository : IMealItemRepository
 	{
 		private readonly DietAppDbContex _context;
+		private readonly string MEAL_ITEM_NOT_FOUND = "Meal item not found";
 
 		public MealItemRepository(DietAppDbContex context)
 		{
@@ -27,8 +29,7 @@ namespace DietApp.Server.Repositories.MealItemRepository
 
 			if (item == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("MealItem not found");
+				throw new EntityNotFoundException(MEAL_ITEM_NOT_FOUND);
 			}
 
 			return await _context.SaveChangesAsync();
@@ -50,8 +51,7 @@ namespace DietApp.Server.Repositories.MealItemRepository
 
 			if (item == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Meal item not found");
+				throw new EntityNotFoundException(MEAL_ITEM_NOT_FOUND);
 			}
 
 			return await _context.SaveChangesAsync();

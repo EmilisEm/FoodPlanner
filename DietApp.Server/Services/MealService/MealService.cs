@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Dtos.MealDtos;
+using DietApp.Server.Exceptions;
 using DietApp.Server.Mappers;
 using DietApp.Server.models;
 using DietApp.Server.Repositories.MealRepository;
@@ -8,6 +9,7 @@ namespace DietApp.Server.Services.MealService
 	public class MealService : IMealService
 	{
 		private readonly IMealRepository _mealRepository;
+		private readonly string MEAL_NOT_FOUND = "Meal not found";
 
 		public MealService(IMealRepository mealRepository)
 		{
@@ -33,8 +35,7 @@ namespace DietApp.Server.Services.MealService
 
 			if (meal == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Meal not found");
+				throw new EntityNotFoundException(MEAL_NOT_FOUND);
 			}
 
 			return MealMapper.ToDto(meal);

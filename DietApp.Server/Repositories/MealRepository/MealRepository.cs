@@ -1,4 +1,5 @@
 ﻿using DietApp.Server.Data;
+using DietApp.Server.Exceptions;
 using DietApp.Server.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace DietApp.Server.Repositories.MealRepository
 	public class MealRepository : IMealRepository
 	{
 		private readonly DietAppDbContex _context;
+		private readonly string MEAL_NOT_FOUND = "Meal not found";
 		public MealRepository(DietAppDbContex context)
 		{
 			_context = context;
@@ -26,8 +28,7 @@ namespace DietApp.Server.Repositories.MealRepository
 
 			if (meal == null)
 			{
-				// TODO: 
-				throw new Exception("Could not find meal");
+				throw new EntityNotFoundException(MEAL_NOT_FOUND);
 			}
 
 			_context.Meals.Remove(meal);
@@ -50,8 +51,7 @@ namespace DietApp.Server.Repositories.MealRepository
 
 			if (original == null)
 			{
-				// TODO: Exceptions
-				throw new Exception("Failed to find meal");
+				throw new EntityNotFoundException(MEAL_NOT_FOUND);
 			}
 
 			_context.Entry(original).CurrentValues.SetValues(meal);
